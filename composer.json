@@ -1,0 +1,35 @@
+{
+  "name" : "wikimedia/omnimail-silverpop",
+  "type" : "library",
+  "description" : "Silverpop plugin for Omnimail",
+  "keywords" : [
+    "email",
+    "mail",
+    "delivery",
+    "omnimail",
+    "silverpop"
+  ],
+  "license" : "MIT",
+  "authors" : [{
+    "name" : "Eileen McNaughton",
+    "email" : "emcnaughton@wikimedia.org"
+  }
+  ],
+  "autoload" : {
+    "psr-4" : {
+      "Omnimail\\Silverpop\\" : "src"
+    }
+  },
+  "autoload-dev" : {
+    "psr-4" : {
+      "Omnimail\\Tests\\" : "test/tests"
+    }
+  },
+  "require": {
+    "mrmarkfrench/silverpop-php-connector": "*",
+    "league/csv" : "^8.0"
+  },
+  "minimum-stability" : "dev",
+  "prefer-stable" : true
+}
+
