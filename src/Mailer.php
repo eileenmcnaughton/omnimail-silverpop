@@ -2,13 +2,8 @@
 
 namespace Omnimail\Silverpop;
 
-use Omnimail\Common\AbstractMailer;
-use Omnimail\EmailInterface;
-use Omnimail\MailerInterface;
-use Omnimail\Omnimail;
 use Omnimail\Silverpop\Requests\GetSentMailingsForOrgRequest;
 use Omnimail\Silverpop\Requests\RawRecipientDataExportRequest;
-use SilverpopConnector\SilverpopConnectorException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -64,8 +59,24 @@ class Mailer extends AbstractMailer implements MailerInterface
     $this->engageServer = $engageServer;
   }
 
+  public function send(EmailInterface $email) {}
 
-    public function send(EmailInterface $email) {}
+  /**
+   * Get the defaults.
+   *
+   * If no default is provided it is a required parameter.
+   *
+   * @return array
+   */
+  public function getDefaults() {
+    return array(
+      'username' => '',
+      'password' => '',
+      'engage_server' => 4,
+      'start_date' => 'a week ago',
+      'end_date' => 'now',
+    );
+  }
 
   /**
    * Get Mailings.
