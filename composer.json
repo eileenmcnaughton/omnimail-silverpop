@@ -32,7 +32,7 @@
     }
   ],
   "require": {
-    "mrmarkfrench/silverpop-php-connector": "*",
+    "mrmarkfrench/silverpop-php-connector": "dev-master",
     "league/csv" : "^8.0",
     "omnimail/omnimail": "dev-master",
     "phpseclib/phpseclib":  "~2.0"
