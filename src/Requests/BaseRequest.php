@@ -152,7 +152,7 @@ abstract class BaseRequest implements RequestInterface
      */
   public function __construct($parameters) {
     Helper::initialize($this, array_merge($this->getDefaultParameters(), $parameters));
-    $this->silverPop = SilverpopConnector::getInstance($this->getEndPoint());
+    $this->silverPop = SilverpopGuzzleConnector::getInstance($this->getEndPoint());
     if ($this->client) {
       $this->silverPop->setClient($this->client);
     }

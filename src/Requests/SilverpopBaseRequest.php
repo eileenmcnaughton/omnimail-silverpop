@@ -155,7 +155,7 @@ abstract class SilverpopBaseRequest extends BaseRequest implements RequestInterf
    */
   public function __construct($parameters) {
     parent::__construct($parameters);
-    $this->silverPop = SilverpopConnector::getInstance($this->getEndPoint());
+    $this->silverPop = SilverpopGuzzleConnector::getInstance($this->getEndPoint());
   }
 
   /**
