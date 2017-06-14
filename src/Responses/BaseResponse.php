@@ -9,7 +9,7 @@ namespace Omnimail\Silverpop\Responses;
 
 use Omnimail\Common\Helper;
 
-abstract class BaseResponse extends \arrayObject
+abstract class BaseResponse extends \arrayObject implements ResponseInterface
 {
   /**
    * @var \SilverpopConnector\SilverpopXmlConnector
@@ -103,6 +103,13 @@ abstract class BaseResponse extends \arrayObject
     return array(
       'endpoint' => 'https://api4.silverpop.com',
     );
+  }
+
+  /**
+   * Is the data available yet.
+   */
+  public function isCompleted() {
+    TRUE;
   }
 
 }

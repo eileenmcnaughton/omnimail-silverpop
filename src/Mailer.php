@@ -2,8 +2,13 @@
 
 namespace Omnimail\Silverpop;
 
+use Mailjet\Response;
 use Omnimail\Silverpop\Requests\GetSentMailingsForOrgRequest;
 use Omnimail\Silverpop\Requests\RawRecipientDataExportRequest;
+use Omnimail\MailerInterface;
+use Omnimail\Silverpop\Requests\RequestInterface;
+use Omnimail\Silverpop\Responses\ResponseInterface;
+use Omnimail\Silverpop\Responses\Offline\OfflineMailingsResponse;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,24 +16,45 @@ use Omnimail\Silverpop\Requests\RawRecipientDataExportRequest;
  * Date: 4/4/17
  * Time: 12:12 PM
  */
-class Mailer extends AbstractMailer implements MailerInterface
+class Mailer implements MailerInterface
 {
     protected $username;
     protected $password;
     protected $engageServer;
 
   /**
+   * Guzzle client, overridable with mock object in tests.
+   *
+   * @var \GuzzleHttp\Client
+   */
+    protected $client;
+
+  /**
+   * @return \GuzzleHttp\Client
+   */
+  public function getClient() {
+    return $this->client;
+  }
+
+  /**
+   * @param \GuzzleHttp\Client $client
+   */
+  public function setClient($client) {
+    $this->client = $client;
+  }
+
+  /**
    * @return mixed
    */
   public function getUsername() {
-    return $this->userName;
+    return $this->username;
   }
 
   /**
    * @param mixed $userName
    */
   public function setUsername($userName) {
-    $this->userName = $userName;
+    $this->username = $userName;
   }
 
   /**
@@ -59,7 +85,7 @@ class Mailer extends AbstractMailer implements MailerInterface
     $this->engageServer = $engageServer;
   }
 
-  public function send(EmailInterface $email) {}
+  public function send(\Omnimail\EmailInterface $email) {}
 
   /**
    * Get the defaults.
@@ -73,8 +99,6 @@ class Mailer extends AbstractMailer implements MailerInterface
       'username' => '',
       'password' => '',
       'engage_server' => 4,
-      'start_date' => 'a week ago',
-      'end_date' => 'now',
     );
   }
 
@@ -83,21 +107,14 @@ class Mailer extends AbstractMailer implements MailerInterface
    *
    * @param array $parameters
    *
-   * @return \Omnimail\Silverpop\Responses\MailingsResponse
+   * @return \Omnimail\Silverpop\Requests\SilverpopBaseRequest
    */
-    public function getMailings($parameters) {
-      $requestObject = new GetSentMailingsForOrgRequest(array(
+    public function getMailings($parameters = array()) {
+      return $this->createRequest('GetSentMailingsForOrgRequest', array_merge($parameters, array(
         'username' => $this->getUsername(),
-        'password' => $this->getPassword()
-      ));
-
-      $requestObject->setStartTimeStamp((strtotime(!empty($parameters['start_date']) ? $parameters['start_date'] : 'a week ago')));
-      if (!empty($parameters['end_date'])) {
-        $requestObject->setEndTimeStamp(strtotime($parameters['end_date']));
-      }
-
-      $mailings = $requestObject->getResponse();
-      return $mailings;
+        'password' => $this->getPassword(),
+        'client' => $this->getClient(),
+      )));
     }
 
   /**
@@ -105,21 +122,52 @@ class Mailer extends AbstractMailer implements MailerInterface
    *
    * @param array $parameters
    *
-   * @return \Omnimail\Silverpop\Responses\MailingsResponse
+   * @return \Omnimail\Silverpop\Requests\SilverpopBaseRequest
    */
-  public function getRecipients($parameters) {
-    $requestObject = new RawRecipientDataExportRequest(array_merge($parameters, array(
+  public function getRecipients($parameters = array()) {
+    return new RawRecipientDataExportRequest(array_merge($parameters, array(
       'username' => $this->getUsername(),
       'password' => $this->getPassword()
     )));
+  }
 
-    $requestObject->setStartTimeStamp((strtotime(!empty($parameters['start_date']) ? $parameters['start_date'] : 'a week ago')));
-    if (!empty($parameters['end_date'])) {
-      $requestObject->setEndTimeStamp(strtotime($parameters['end_date']));
-    }
-
-    $recipients = $requestObject->getResponse($parameters);
-    return $recipients;
+  /**
+   * Initialize a request object
+   *
+   * This function is usually used to initialise objects of type
+   * BaseRequest (or a non-abstract subclass of it)
+   * with using existing parameters from this gateway.
+   *
+   * The request object is passed in, allowing for a non-interactive instance
+   * to be used in developer mode.
+   *
+   * Example:
+   *
+   * <code>
+   *   class MyRequest extends \Omnipay\Common\Message\AbstractRequest {};
+   *
+   *   class MyGateway extends \Omnipay\Common\AbstractGateway {
+   *     function myRequest($parameters) {
+   *       $this->createRequest('MyRequest', $request, $parameters);
+   *     }
+   *   }
+   *
+   *   // Create the gateway object
+   *   $gw = Omnimail::create('MyGateway');
+   *
+   *   // Create the request object
+   *   $myRequest = $gw->myRequest($someParameters);
+   * </code>
+   *
+   * @param string $class The request class name
+   * @param array $parameters
+   *
+   * @return RequestInterface
+   */
+  protected function createRequest($class, array $parameters)
+  {
+    $class = "Omnimail\\Silverpop\\Requests\\" . $class;
+    return new $class($parameters);
   }
 
 }

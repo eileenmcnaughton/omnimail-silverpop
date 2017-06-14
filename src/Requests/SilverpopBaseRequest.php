@@ -9,13 +9,12 @@ namespace Omnimail\Silverpop\Requests;
 
 use Omnimail\Common\Helper;
 use Omnimail\Silverpop\Connector\SilverpopGuzzleConnector;
-use Omnimail\Silverpop\Responses\ResponseInterface;
-use SilverpopConnector\SilverpopConnector;
+use Omnimail\Silverpop\Connector\SilverpopGuzzleXmlConnector;
 
-abstract class BaseRequest implements RequestInterface
+abstract class SilverpopBaseRequest extends BaseRequest implements RequestInterface
 {
   /**
-   * @var \SilverpopConnector\SilverpopXmlConnector
+   * @var \Omnimail\Silverpop\Connector\SilverpopGuzzleXmlConnector
    */
   protected $silverPop;
 
@@ -32,6 +31,7 @@ abstract class BaseRequest implements RequestInterface
    * @var int
    */
   protected $endTimeStamp;
+
 
   /**
    * Url to direct requests to.
@@ -55,24 +55,27 @@ abstract class BaseRequest implements RequestInterface
   protected $password;
 
   /**
-   * Guzzle client, overridable with mock object in tests.
+   * Developer mode.
    *
-   * @var \GuzzleHttp\Client
+   * In developer mode the authenticate request will not be sent and a mock client
+   * will be used. This may, optionally, be passed in.
+   *
+   * @var bool
    */
-  protected $client;
+  protected $developerMode;
 
   /**
-   * @return \GuzzleHttp\Client
+   * @return bool
    */
-  public function getClient() {
-    return $this->client;
+  public function isDeveloperMode() {
+    return $this->developerMode;
   }
 
   /**
-   * @param \GuzzleHttp\Client $client
+   * @param bool $developerMode
    */
-  public function setClient($client) {
-    $this->client = $client;
+  public function setDeveloperMode($developerMode) {
+    $this->developerMode = $developerMode;
   }
 
   /**
@@ -145,18 +148,14 @@ abstract class BaseRequest implements RequestInterface
     $this->password = $password;
   }
 
-    /**
-     * BaseRequest constructor.
-     *
-     * @param $parameters
-     */
+  /**
+   * SilverpopBaseRequest constructor.
+   *
+   * @param $parameters
+   */
   public function __construct($parameters) {
-    Helper::initialize($this, array_merge($this->getDefaultParameters(), $parameters));
+    parent::__construct($parameters);
     $this->silverPop = SilverpopConnector::getInstance($this->getEndPoint());
-    if ($this->client) {
-      $this->silverPop->setClient($this->client);
-    }
-    $this->silverPop->authenticateXml($this->getUsername(), $this->getPassword());
   }
 
   /**

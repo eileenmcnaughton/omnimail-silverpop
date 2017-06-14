@@ -22,12 +22,23 @@
   },
   "autoload-dev" : {
     "psr-4" : {
-      "Omnimail\\Tests\\" : "test/tests"
+      "Omnimail\\Silverpop\\Tests\\" : "test/tests"
     }
   },
+  "repositories": [
+    {
+      "type": "git",
+      "url":  "https://github.com/eileenmcnaughton/silverpop-php-connector.git"
+    }
+  ],
   "require": {
     "mrmarkfrench/silverpop-php-connector": "*",
-    "league/csv" : "^8.0"
+    "league/csv" : "^8.0",
+    "omnimail/omnimail": "dev-master",
+    "phpseclib/phpseclib":  "~2.0"
+  },
+  "require-dev": {
+    "guzzlehttp/guzzle": "*"
   },
   "minimum-stability" : "dev",
   "prefer-stable" : true

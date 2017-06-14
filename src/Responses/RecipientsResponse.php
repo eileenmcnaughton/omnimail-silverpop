@@ -179,6 +179,9 @@ class RecipientsResponse extends BaseResponse
    * @return mixed
    */
   public function getCsvColumns() {
+    if (!$this->reader) {
+      $this->setCsvReader();  
+    } 
     $headerRow = $this->reader->fetchOne();
     return $headerRow;
   }

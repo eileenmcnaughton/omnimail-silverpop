@@ -103,6 +103,9 @@ class RawRecipientDataExportRequest extends BaseRequest
     );
   }
 
+  /**
+   * Request data from the provider.
+   */
   protected function requestData() {
     $dates = array();
     if ($this->getStartTimeStamp()) {

@@ -9,7 +9,7 @@ namespace Omnimail\Silverpop\Requests;
 
 use Omnimail\Silverpop\Responses\MailingsResponse;
 
-class GetSentMailingsForOrgRequest extends BaseRequest
+class GetSentMailingsForOrgRequest extends SilverpopBaseRequest
 {
 
   /**
@@ -70,6 +70,41 @@ class GetSentMailingsForOrgRequest extends BaseRequest
   }
 
   /**
+   * @param string $endPoint
+   */
+  public function setEndPoint($endPoint) {
+    $this->endPoint = $endPoint;
+  }
+
+  /**
+   * @return int
+   */
+  public function getStartTimeStamp() {
+    return $this->startTimeStamp;
+  }
+
+  /**
+   * @param int $startTimeStamp
+   */
+  public function setStartTimeStamp($startTimeStamp) {
+    $this->startTimeStamp = $startTimeStamp;
+  }
+
+  /**
+   * @return int
+   */
+  public function getEndTimeStamp() {
+    return $this->endTimeStamp;
+  }
+
+  /**
+   * @param int $endTimeStamp
+   */
+  public function setEndTimeStamp($endTimeStamp) {
+    $this->endTimeStamp = $endTimeStamp;
+  }
+
+  /**
    * Get Reponse
    *
    * @return array
@@ -104,7 +139,7 @@ class GetSentMailingsForOrgRequest extends BaseRequest
   public function getDefaultParameters() {
     return array(
       'endpoint' => 'https://api4.silverpop.com',
-      'statuses' => array('sent', 'sending'),
+      'statuses' => array('SENT', 'SENDING'),
       'includeZeroSent' => FALSE,
       'includeTest' => FALSE,
       'startTimeStamp' => strtotime('1 week ago'),
