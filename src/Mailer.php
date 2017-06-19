@@ -2,7 +2,6 @@
 
 namespace Omnimail\Silverpop;
 
-use Mailjet\Response;
 use Omnimail\Silverpop\Requests\GetSentMailingsForOrgRequest;
 use Omnimail\Silverpop\Requests\RawRecipientDataExportRequest;
 use Omnimail\MailerInterface;
