@@ -17,13 +17,18 @@ use Omnimail\Silverpop\Connector\SilverpopGuzzleXmlConnector;
  * Using Guzzle rather than CURL means we can add listeners to the request and offer mock
  * responses during testing. The Guzzle class also has some additional functions submitted
  * in this PR https://github.com/mrmarkfrench/silverpop-php-connector/pull/25
+ *
+ * UPDATE to below - since writing this some patches I wrote have been merged upstream
+ * and I feel positive about getting those things merged & switching back to the main repo.
+ * I have retained these override classes for now but probably will switch back
  * 
  * Longer term I'm on the fence as to whether to simply improve the classes
  * in this package to the point where the dependency on the silverpop-php-connector package gets 
  * removed. There are a couple of things I don't like about the silverpop-php-connector package
- * 1) The addition of api calls appears to be adhoc and, in particular, I feel like the choice of parameters
+ * 1) [UPDATE: have support for structure change to address this]
+ *   The addition of api calls appears to be adhoc and, in particular, I feel like the choice of parameters
  * the functions take feels a bit arbitrary and it's not clear how you extend those
- * 2) Although the package is active I have yet to get a response to the PR I submitted.
+ * 2) [UPDATE: NO LONGER TRUE] Although the package is active I have yet to get a response to the PR I submitted.
  * 3) This is kind of really minor, but also quite a pain... The retention of trailing spaces means
  * I have to reconfigure my IDE to work with this code. It's not a convention I hit anywhere else.
  * 
