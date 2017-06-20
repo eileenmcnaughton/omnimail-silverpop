@@ -124,9 +124,10 @@ class Mailer implements MailerInterface
    * @return \Omnimail\Silverpop\Requests\SilverpopBaseRequest
    */
   public function getRecipients($parameters = array()) {
-    return new RawRecipientDataExportRequest(array_merge($parameters, array(
+    return $this->createRequest('RawRecipientDataExportRequest', array_merge($parameters, array(
       'username' => $this->getUsername(),
-      'password' => $this->getPassword()
+      'password' => $this->getPassword(),
+      'client' => $this->getClient(),
     )));
   }
 

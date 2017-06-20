@@ -23,14 +23,27 @@ class SilverpopTest extends BaseTestClass {
         $request = Omnimail::create('Silverpop', array('client' => $this->getMockRequest($requests)))->getMailings();
         $response = $request->getResponse();
         $this->assertTrue(is_a($response, 'Omnimail\Silverpop\Responses\MailingsResponse'));
+    }
 
+
+  /**
+   * Test retrieving mailings.
+   */
+  public function testGetRecipients() {
+    $requests = array(
+      file_get_contents(__DIR__ . '/Responses/AuthenticateResponse.txt'),
+      file_get_contents(__DIR__ . '/Responses/AggregateGetResponse1.txt'),
+    );
+    /* @var $request \Omnimail\Silverpop\Requests\RawRecipientDataExportRequest */
+    $request = Omnimail::create('Silverpop', array('client' => $this->getMockRequest($requests)))->getRecipients();
+    $response = $request->getResponse();
+    $this->assertTrue(is_a($response, 'Omnimail\Silverpop\Responses\RecipientsResponse'));
     }
 
   /**
    * Get mock guzzle client object.
    *
-   * @param array $container
-   * @param $body
+   * @param array $body
    * @param bool $authenticateFirst
    * @return \GuzzleHttp\Client
    */
