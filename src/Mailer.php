@@ -86,20 +86,18 @@ class Mailer implements MailerInterface
 
   public function send(\Omnimail\EmailInterface $email) {}
 
-  /**
-   * Get the defaults.
-   *
-   * If no default is provided it is a required parameter.
-   *
-   * @return array
-   */
-  public function getDefaults() {
-    return array(
-      'username' => '',
-      'password' => '',
-      'engage_server' => 4,
-    );
-  }
+    /**
+     * Get an array of the credential fields that are required.
+     *
+     * @return array
+     */
+    public function getCredentialFields() {
+      return array(
+        'username' => array('type' => 'String', 'required' => TRUE),
+        'password' => array('type' => 'String', 'required' => TRUE),
+        'engage_server' => array('type' => 'String', 'required' => FALSE, 'default' => 4),
+      );
+    }
 
   /**
    * Get Mailings.
