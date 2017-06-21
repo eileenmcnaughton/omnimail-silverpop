@@ -3,6 +3,7 @@
 namespace Omnimail\Silverpop\Tests;
 
 use Omnimail\Omnimail;
+use Omnimail\Silverpop\Credentials;
 use Omnimail\Silverpop\Responses\RecipientsResponse;
 use Omnimail\Silverpop\Responses\MailingsResponse;
 use Omnimail\Silverpop\Tests\BaseTestClass;
@@ -26,7 +27,7 @@ class SilverpopTest extends BaseTestClass {
      */
     public function testAuthenticate() {
         $requests = array(file_get_contents(__DIR__ . '/Responses/AuthenticateResponse.txt'));
-        Omnimail::create('Silverpop', array('client' => $this->getMockRequest($requests, false), 'username' => 'Shrek', 'password' => 'Fiona'))->getMailings();
+        Omnimail::create('Silverpop', array('client' => $this->getMockRequest($requests, false), 'credentials' => new Credentials(array('username' => 'Shrek', 'password' => 'Fiona'))))->getMailings();
         $this->assertOutgoingRequest('Authenticate.txt');
     }
 

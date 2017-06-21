@@ -2,6 +2,7 @@
 
 namespace Omnimail\Silverpop;
 
+use Omnimail\Silverpop\AbstractMailer;
 use Omnimail\Silverpop\Requests\GetSentMailingsForOrgRequest;
 use Omnimail\Silverpop\Requests\RawRecipientDataExportRequest;
 use Omnimail\MailerInterface;
@@ -15,18 +16,15 @@ use Omnimail\Silverpop\Responses\Offline\OfflineMailingsResponse;
  * Date: 4/4/17
  * Time: 12:12 PM
  */
-class Mailer implements MailerInterface
+class Mailer extends AbstractMailer implements MailerInterface
 {
-    protected $username;
-    protected $password;
-    protected $engageServer;
 
   /**
    * Guzzle client, overridable with mock object in tests.
    *
    * @var \GuzzleHttp\Client
    */
-    protected $client;
+  protected $client;
 
   /**
    * @return \GuzzleHttp\Client
@@ -40,48 +38,6 @@ class Mailer implements MailerInterface
    */
   public function setClient($client) {
     $this->client = $client;
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getUsername() {
-    return $this->username;
-  }
-
-  /**
-   * @param mixed $userName
-   */
-  public function setUsername($userName) {
-    $this->username = $userName;
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getPassword() {
-    return $this->password;
-  }
-
-  /**
-   * @param mixed $password
-   */
-  public function setPassword($password) {
-    $this->password = $password;
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getEngageServer() {
-    return $this->engageServer ? $this->engageServer : 4;
-  }
-
-  /**
-   * @param mixed $engageServer
-   */
-  public function setEngageServer($engageServer) {
-    $this->engageServer = $engageServer;
   }
 
   public function send(\Omnimail\EmailInterface $email) {}
@@ -108,8 +64,7 @@ class Mailer implements MailerInterface
    */
     public function getMailings($parameters = array()) {
       return $this->createRequest('GetSentMailingsForOrgRequest', array_merge($parameters, array(
-        'username' => $this->getUsername(),
-        'password' => $this->getPassword(),
+        'credentials' => $this->getCredentials(),
         'client' => $this->getClient(),
       )));
     }
@@ -123,8 +78,7 @@ class Mailer implements MailerInterface
    */
   public function getRecipients($parameters = array()) {
     return $this->createRequest('RawRecipientDataExportRequest', array_merge($parameters, array(
-      'username' => $this->getUsername(),
-      'password' => $this->getPassword(),
+      'credentials' => $this->getCredentials(),
       'client' => $this->getClient(),
     )));
   }
@@ -162,7 +116,7 @@ class Mailer implements MailerInterface
   protected function createRequest($class, array $parameters)
   {
     $class = "Omnimail\\Silverpop\\Requests\\" . $class;
-    return new $class($parameters);
+    return parent::createRequest($class, $parameters);
   }
 
 }
