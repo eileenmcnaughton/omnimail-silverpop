@@ -10,6 +10,7 @@ namespace Omnimail\Silverpop\Requests;
 use Omnimail\Common\Credentials;
 use Omnimail\Common\Helper;
 use Omnimail\Silverpop\Connector\SilverpopGuzzleConnector;
+use SilverpopConnector\SilverpopRestConnector;
 use Omnimail\Silverpop\Responses\ResponseInterface;
 use SilverpopConnector\SilverpopConnector;
 
@@ -189,6 +190,10 @@ abstract class BaseRequest implements RequestInterface
       $this->silverPop->setClient($this->client);
     }
     if (!empty($parameters['is_use_rest'])) {
+        $this->restConnector = SilverpopRestConnector::getInstance();
+        if (!empty($parameters['client'])) {
+            $this->restConnector->setClient($parameters['client']);
+        }
       $this->silverPop->authenticateRest($this->getCredential('client_id'), $this->getCredential('client_secret'), $this->getCredential('refresh_token'));
       $this->setDatabaseId($this->getCredential('database_id'));
     }
