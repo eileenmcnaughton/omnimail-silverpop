@@ -190,6 +190,7 @@ abstract class BaseRequest implements RequestInterface
     }
     if (!empty($parameters['is_use_rest'])) {
       $this->silverPop->authenticateRest($this->getCredential('client_id'), $this->getCredential('client_secret'), $this->getCredential('refresh_token'));
+      $this->setDatabaseId($this->getCredential('database_id'));
     }
     else {
       $this->silverPop->authenticateXml($this->getCredential('username'), $this->getCredential('password'));
