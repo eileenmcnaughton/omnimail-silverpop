@@ -21,7 +21,7 @@ class PrivacyDeleteRequest extends SilverpopBaseRequest
      *
      * @var int
      */
-    protected $database_id;
+    protected $database_id = [];
 
     /**
      * @return int
@@ -65,7 +65,13 @@ class PrivacyDeleteRequest extends SilverpopBaseRequest
      * Request data from the provider.
      */
     protected function requestData() {
-        return $this->silverPop->gdpr_erasure(['data' => $this->getEmailArray(), 'database_id' => $this->getDatabaseId()]);
+        $requests = [];
+        foreach ((array) $this->getDatabaseId() as $databaseID) {
+            $requests[] = $this->silverPop->gdpr_erasure(['data' => $this->getEmailArray(), 'database_id' => $databaseID]);
+        }
+        // This may be transitional. We used to just deal with one database, now multiple. We don't do much with the
+        // return value so handling it may not matter....
+        return (is_array($this->getDatabaseId()) || !$this->getDatabaseId()) ? $requests : $requests[0];
     }
 
     protected function getEmailArray() {
