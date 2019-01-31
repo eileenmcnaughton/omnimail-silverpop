@@ -2,6 +2,7 @@
 
 namespace Omnimail\Silverpop\Requests;
 
+use Omnimail\Silverpop\Responses\EraseResponse;
 use Omnimail\Silverpop\Responses\GroupMembersResponse;
 use Omnimail\Silverpop\Responses\MailingsResponse;
 use Omnimail\Silverpop\Responses\Contact;
@@ -54,10 +55,10 @@ class PrivacyDeleteRequest extends SilverpopBaseRequest
     /**
      * Get Response
      *
-     * @return GroupMembersResponse
+     * @return EraseResponse
      */
     public function getResponse() {
-        $response = new Contact($this->requestData());
+        $response = $this->requestData();
         return $response;
     }
 
@@ -67,7 +68,7 @@ class PrivacyDeleteRequest extends SilverpopBaseRequest
     protected function requestData() {
         $requests = [];
         foreach ((array) $this->getDatabaseId() as $databaseID) {
-            $requests[] = $this->silverPop->gdpr_erasure(['data' => $this->getEmailArray(), 'database_id' => $databaseID]);
+            $requests[] = new EraseResponse($this->silverPop->gdpr_erasure(['data' => $this->getEmailArray(), 'database_id' => $databaseID]));
         }
         // This may be transitional. We used to just deal with one database, now multiple. We don't do much with the
         // return value so handling it may not matter....
