@@ -25,6 +25,27 @@ class PrivacyDeleteRequest extends SilverpopBaseRequest
     protected $database_id = [];
 
     /**
+     * Parameters for retrieving an in-progress job.
+     *
+     * @var array
+     */
+    protected $retrievalParameters = [];
+
+    /**
+     * @return array
+     */
+    public function getRetrievalParameters() {
+        return $this->retrievalParameters;
+    }
+
+    /**
+     * @param array $retrievalParameters
+     */
+    public function setRetrievalParameters($retrievalParameters) {
+        $this->retrievalParameters = $retrievalParameters;
+    }
+
+    /**
      * @return int
      */
     public function getDatabaseId() {
@@ -68,11 +89,9 @@ class PrivacyDeleteRequest extends SilverpopBaseRequest
     protected function requestData() {
         $requests = [];
         foreach ((array) $this->getDatabaseId() as $databaseID) {
-            $requests[] = new EraseResponse($this->silverPop->gdpr_erasure(['data' => $this->getEmailArray(), 'database_id' => $databaseID]));
+            $requests[] = new EraseResponse($this->silverPop->gdpr_erasure(['data' => $this->getEmailArray(), 'database_id' => $databaseID, 'retrieval_parameters' => $this->getRetrievalParameters()]));
         }
-        // This may be transitional. We used to just deal with one database, now multiple. We don't do much with the
-        // return value so handling it may not matter....
-        return (is_array($this->getDatabaseId()) || !$this->getDatabaseId()) ? $requests : $requests[0];
+        return $requests;
     }
 
     protected function getEmailArray() {

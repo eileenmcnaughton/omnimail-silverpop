@@ -10,17 +10,10 @@ namespace Omnimail\Silverpop\Responses;
 class EraseResponse extends BaseResponse
 {
     /**
-     * Parameters for retrieving the results.
-     *
-     * @var array
-     */
-    protected $retrievalParameters;
-
-    /**
      * @return array
      */
     public function getRetrievalParameters() {
-        return ['job_id' => $this['data']['job_id'], 'database_id' => $this['data']['database_id']];
+        return ['fetch_url' => $this['data']['fetch_url'], 'database_id' => $this['data']['database_id']];
     }
 
     /**
