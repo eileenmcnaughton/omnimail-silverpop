@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "d36ef33122cffc17b5728cc0c1671e82",
@@ -291,12 +291,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gabrielbull/omnimail.git",
-                "reference": "012a134d3ad93e7a383dc574e94faae5c42f05c0"
+                "reference": "eddc029c43af9e2d30e5eca2f3c357ed9c4d2532"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gabrielbull/omnimail/zipball/012a134d3ad93e7a383dc574e94faae5c42f05c0",
-                "reference": "012a134d3ad93e7a383dc574e94faae5c42f05c0",
+                "url": "https://api.github.com/repos/gabrielbull/omnimail/zipball/eddc029c43af9e2d30e5eca2f3c357ed9c4d2532",
+                "reference": "eddc029c43af9e2d30e5eca2f3c357ed9c4d2532",
                 "shasum": ""
             },
             "require": {
@@ -306,15 +306,15 @@
                 "psr/log": "^1.0"
             },
             "require-dev": {
-                "daniel-zahariev/php-aws-ses": "^0.8",
-                "mailgun/mailgun-php": "^2.3",
+                "daniel-zahariev/php-aws-ses": "^0.9",
+                "mailgun/mailgun-php": "^2.4",
                 "mailin-api/mailin-api-php": "^1.0",
-                "mailjet/mailjet-apiv3-php": "^1.1",
+                "mailjet/mailjet-apiv3-php": "^1.2",
                 "mandrill/mandrill": "^1.0",
                 "php-http/guzzle6-adapter": "^1.1",
-                "phpunit/phpunit": "^5.7 || ^6.1",
-                "sendgrid/sendgrid": "^5.5",
-                "wildbit/postmark-php": "^2.3"
+                "phpunit/phpunit": "^5.7 || ^6.5",
+                "sendgrid/sendgrid": "^6.0",
+                "wildbit/postmark-php": "^2.5"
             },
             "suggest": {
                 "daniel-zahariev/php-aws-ses": "Required if you use the AmazonSES sending system",
@@ -355,7 +355,7 @@
                 "sendgrid",
                 "sendinblue"
             ],
-            "time": "2017-05-15T13:50:56+00:00"
+            "time": "2018-09-28T14:54:32+00:00"
         },
         {
             "name": "paragonie/random_compat",
