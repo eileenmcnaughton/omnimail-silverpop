@@ -65,7 +65,7 @@ abstract class BaseResponse extends \arrayObject implements ResponseInterface
    *
    * @var int
    */
-  protected $limit;
+  protected $limit = 0;
 
   /**
    * @return int

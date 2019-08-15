@@ -90,7 +90,7 @@ class Contact {
    * @return mixed
    */
   public function getOptInTimestamp() {
-    return isset($this->optInTimestamp) ? (string) $this->optInTimestamp : strtotime($this->data['Opt In Date']);
+    return isset($this->data['opt_in_timestamp']) ? (string) $this->data['opt_in_timestamp'] : strtotime($this->data['Opt In Date']);
   }
 
   /**
