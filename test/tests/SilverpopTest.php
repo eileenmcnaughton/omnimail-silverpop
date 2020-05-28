@@ -43,6 +43,21 @@ class SilverpopTest extends BaseTestClass {
     }
 
     /**
+     * Test the getQuery function.
+     */
+    public function testGetQuery() {
+        $requests = [
+            file_get_contents(__DIR__ . '/Responses/GetQueryResponse.txt'),
+        ];
+        /* @var $request \Omnimail\Silverpop\Requests\GetQueryRequest */
+        $request = Omnimail::create('Silverpop', ['client' => $this->getMockRequest($requests)])->getQueryCriteria();
+        $response = $request->getResponse();
+        $this->assertTrue(is_a($response, 'Omnimail\Silverpop\Responses\QueryCriteriaResponse'));
+        $this->assertEquals('Super witty name written by a master of words', $response->getQueryName());
+        $this->assertEquals('( is in contact list 1234567 AND Segment is equal to 328 AND latest_donation_date is before 01/01/2019 ) OR Email is equal to info@example.org', $response->getQueryCriteria());
+    }
+
+    /**
      * Test retrieving mailings.
      */
     public function testGetRecipients() {
