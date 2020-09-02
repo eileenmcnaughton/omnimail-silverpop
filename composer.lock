@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "426df030c3adfccfa3728b96c22465ff",
+    "content-hash": "13113b88ff16571e288f02af1c7925bc",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -269,8 +269,14 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/eileenmcnaughton/silverpop-php-connector",
-                "reference": "970c4dbd4b5ef862f1789bedf734342f27b347b4"
+                "url": "https://github.com/mrmarkfrench/silverpop-php-connector.git",
+                "reference": "cb252dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mrmarkfrench/silverpop-php-connector/zipball/cb252dd",
+                "reference": "cb252dd",
+                "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
@@ -288,11 +294,7 @@
                     "SilverpopConnector\\": "src/SilverpopConnector"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "SilverpopConnector\\Tests\\": "test/tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -306,7 +308,7 @@
             "keywords": [
                 "Silverpop"
             ],
-            "time": "2020-09-02T03:20:20+00:00"
+            "time": "2020-09-02T19:07:33+00:00"
         },
         {
             "name": "omnimail/omnimail",
