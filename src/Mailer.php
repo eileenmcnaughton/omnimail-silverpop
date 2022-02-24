@@ -88,6 +88,20 @@ class Mailer extends AbstractMailer implements MailerInterface
   }
 
   /**
+   * Get Group Members.
+   *
+   * @param array $parameters
+   *
+   * @return \Omnimail\Silverpop\Requests\CreateContactListRequest
+   */
+  public function createGroup($parameters = []) {
+    return $this->createRequest('CreateContactListRequest', array_merge($parameters, [
+      'credentials' => $this->getCredentials(),
+      'client' => $this->getClient(),
+    ]));
+  }
+
+  /**
    * Get Recipients.
    *
    * @param array $parameters
