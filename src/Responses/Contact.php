@@ -24,6 +24,47 @@ class Contact {
    */
   protected $email;
 
+ /**
+  * Acoustic Identifier for the group or list.
+  *
+  * @var int
+  */
+  protected $groupIdentifier;
+
+  /**
+   * @return int
+   */
+  public function getGroupIdentifier(): int {
+      return $this->groupIdentifier;
+  }
+
+  /**
+   * @param int|array $groupIdentifier
+   *
+   * @return Contact
+   */
+  public function setGroupIdentifier($groupIdentifier): Contact {
+      $this->groupIdentifier = (array) $groupIdentifier;
+      return $this;
+  }
+
+    /**
+     * @return string
+     */
+    public function getContactIdentifier(): string {
+        return $this->contactIdentifier;
+    }
+
+    /**
+     * @param string $contactIdentifier
+     *
+     * @return Contact
+     */
+    public function setContactIdentifier(string $contactIdentifier): Contact {
+        $this->contactIdentifier = $contactIdentifier;
+        return $this;
+    }
+
   /**
    *  Provider identifier for the contact.
    *
@@ -70,6 +111,57 @@ class Contact {
   protected $optInTimestamp;
 
   /**
+   * @param string $optInTimestamp
+   *
+   * @return Contact
+   */
+  public function setOptInTimestamp(string $optInTimestamp): Contact {
+    $this->optInTimestamp = $optInTimestamp;
+    return $this;
+  }
+
+  /**
+   * @param string|null $optInTimestamp
+   *
+   * @return Contact
+   */
+  public function setOptOutTimestamp(?string $optOutTimestamp): Contact {
+    $this->optOutTimestamp = $optOutTimestamp;
+    return $this;
+  }
+
+  /**
+   * Last modified date.
+   *
+   * @var string
+   */
+  protected $lastModified;
+
+  /**
+   * @return string
+   */
+  public function getLastModified(): string {
+    return $this->lastModified;
+  }
+
+  /**
+   * @return false|string
+   */
+  public function getLastModifiedIsoDateTime() {
+    return (empty($this->getLastModified()) ? FALSE : date('Y-m-d H:i:s', $this->getLastModified()));
+  }
+
+  /**
+   * @param string $lastModified
+   *
+   * @return Contact
+   */
+  public function setLastModifiedTimestamp(?string $lastModified): Contact {
+    $this->lastModified = $lastModified;
+    return $this;
+  }
+
+  /**
    * @var
    */
   protected $optInSource;
@@ -87,9 +179,36 @@ class Contact {
   }
 
   /**
+   * Ad hoc fields as an array.
+   *
+   * @var array
+   */
+  protected $fields = [];
+
+  /**
+   * @return array
+   */
+  public function getFields(): array {
+    return $this->fields;
+  }
+
+  /**
+   * @param array $fields
+   *
+   * @return Contact
+   */
+  public function setFields(array $fields): Contact {
+    $this->fields = $fields;
+    return $this;
+  }
+
+  /**
    * @return mixed
    */
   public function getOptInTimestamp() {
+    if ($this->optInTimestamp) {
+      return strtotime($this->optInTimestamp);
+    }
     return isset($this->data['opt_in_timestamp']) ? (string) $this->data['opt_in_timestamp'] : strtotime($this->data['Opt In Date']);
   }
 
@@ -137,6 +256,9 @@ class Contact {
    * @return mixed
    */
   public function getOptOutTimestamp() {
+    if (!empty($this->optOutTimestamp)) {
+      return $this->optOutTimestamp;
+    }
     return !empty($this->data['Opted Out Date']) ? strtotime($this->data['Opted Out Date']) : FALSE;
   }
 
@@ -172,9 +294,16 @@ class Contact {
   }
 
   /**
+   * Load the contact from Acoustic
+   */
+  public function load(): void {
+    $data = $this->getSilverPop()->selectRecipientData($this->getGroupIdentifier(), [], []);
+  }
+
+  /**
    * Get Silverpop connector object.
    *
-   * @return \SilverpopConnector\SilverpopConnector
+   * @return \SilverpopConnector\SilverpopXmlConnector
    */
   protected function getSilverPop() {
     if (!$this->silverPop) {
