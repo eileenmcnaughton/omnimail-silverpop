@@ -156,13 +156,20 @@ class Contact {
    *
    * @var string
    */
-  protected $lastModified;
+  protected $lastModifiedTimestamp;
+
+  /**
+   * End of sending pause.
+   *
+   * @var string
+   */
+  protected $snoozeEndTimestamp;
 
   /**
    * @return string
    */
   public function getLastModified(): string {
-    return $this->lastModified;
+    return $this->lastModifiedTimestamp;
   }
 
   /**
@@ -173,13 +180,44 @@ class Contact {
   }
 
   /**
-   * @param string $lastModified
+   * @param string|null $lastModified
    *
    * @return Contact
    */
   public function setLastModifiedTimestamp(?string $lastModified): Contact {
-    $this->lastModified = $lastModified;
+    $this->lastModifiedTimestamp = $lastModified;
     return $this;
+  }
+
+  /**
+   * Set the timestamp for emails to resume.
+   *
+   * @param string|null $snoozeEndTimestamp
+   *
+   * @return Contact
+   */
+  public function setSnoozeEndTimestamp(?string $snoozeEndTimestamp): Contact {
+    $this->snoozeEndTimestamp = $snoozeEndTimestamp;
+    return $this;
+  }
+
+
+  /**
+   * Set the timestamp for emails to resume.
+   *
+   * @return string|bool
+   */
+  public function getSnoozeEndTimestamp() {
+    return $this->snoozeEndTimestamp;
+  }
+
+  /**
+   * Set the timestamp for emails to resume.
+   *
+   * @return string|bool
+   */
+  public function getSnoozeEndISODateTime() {
+    return (empty($this->getSnoozeEndTimestamp()) ? FALSE : date('Y-m-d H:i:s', $this->getSnoozeEndTimestamp()));
   }
 
   /**
@@ -228,7 +266,7 @@ class Contact {
    */
   public function getOptInTimestamp() {
     if ($this->optInTimestamp) {
-      return strtotime($this->optInTimestamp);
+      return $this->optInTimestamp;
     }
     return isset($this->data['opt_in_timestamp']) ? (string) $this->data['opt_in_timestamp'] : strtotime($this->data['Opt In Date']);
   }

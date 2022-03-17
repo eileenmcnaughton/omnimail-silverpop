@@ -124,25 +124,10 @@ class AddRecipient extends SilverpopBaseRequest
     if ($result) {
       $response = new Contact([]);
       $response->setGroupIdentifier($this->getGroupIdentifier());
+      $response->setContactIdentifier((int) $result[0]);
       return $response;
     }
     throw new Exception('Update failed.');
-  }
-
-  /**
-   * Request data from the provider.
-   */
-  protected function requestData() {
-    $result = $this->silverPop->exportList(
-      $this->getGroupIdentifier(),
-      $this->getStartTimeStamp(),
-      $this->getEndTimeStamp(),
-      $this->getExportType()
-    );
-    $this->setRetrievalParameters(array(
-      'jobId' => (string) $result['jobId'],
-      'filePath' => (string) $result['filePath'],
-    ));
   }
 
   /**

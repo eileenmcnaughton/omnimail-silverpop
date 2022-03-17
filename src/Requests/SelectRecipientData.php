@@ -103,10 +103,11 @@ class SelectRecipientData extends SilverpopBaseRequest
       }
       $response->setGroupIdentifiers($groups);
       $response->setContactIdentifier($result->RecipientId);
-      $response->setEmail($result->Email);
+      $response->setEmail((string) $result->Email);
       $response->setOptInTimestamp(empty($result->OptedIn) ? NULL : strtotime($result->OptedIn));
       $response->setOptOutTimestamp(empty($result->OptedOpt) ? NULL : strtotime($result->OptedOut));
       $response->setLastModifiedTimestamp(strtotime($result->LastModified));
+      $response->setSnoozeEndTimestamp(empty($result->ResumeSendDate) ? NULL : strtotime($result->ResumeSendDate));
       $fields = [];
       foreach ($result->COLUMNS->COLUMN as $column) {
         $fields[(string) $column->NAME] = (string) $column->VALUE;
