@@ -93,11 +93,15 @@ class SelectRecipientData extends SilverpopBaseRequest
   public function getResponse() {
     $result = $this->silverPop->selectRecipientData(
       $this->getDatabaseID(),
-      ['Email' => $this->getEmail()]
+      ['Email' => $this->getEmail(), 'RETURN_CONTACT_LISTS' => TRUE]
     );
     if ($result) {
       $response = new Contact([]);
-      $response->setGroupIdentifier($this->getGroupIdentifier());
+      $groups = [];
+      foreach ($result->CONTACT_LISTS as $lists) {
+        $groups[] = (int) $lists->CONTACT_LIST_ID;
+      }
+      $response->setGroupIdentifiers($groups);
       $response->setContactIdentifier($result->RecipientId);
       $response->setEmail($result->Email);
       $response->setOptInTimestamp(empty($result->OptedIn) ? NULL : strtotime($result->OptedIn));

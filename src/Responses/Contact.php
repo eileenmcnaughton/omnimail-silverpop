@@ -32,10 +32,31 @@ class Contact {
   protected $groupIdentifier;
 
   /**
-   * @return int
+   * Acoustic Identifier for the group or list.
+   *
+   * @var array
    */
-  public function getGroupIdentifier(): int {
-      return $this->groupIdentifier;
+  protected $groupIdentifiers = [];
+
+  /**
+   * @return int|null
+   */
+  public function getGroupIdentifier(): ?int {
+      return is_numeric($this->groupIdentifier) ? $this->groupIdentifier : reset($this->groupIdentifiers);
+  }
+
+  /**
+   * @return array
+   */
+  public function getGroupIdentifiers(): array {
+    return !empty($this->groupIdentifier) ? [$this->groupIdentifier] : $this->groupIdentifiers;
+  }
+
+  /**
+   * @param array $groupIdentifiers
+   */
+  public function setGroupIdentifiers(array $groupIdentifiers): void {
+    $this->groupIdentifiers = $groupIdentifiers;
   }
 
   /**
