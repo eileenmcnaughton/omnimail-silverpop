@@ -156,8 +156,7 @@ class AddRecipient extends SilverpopBaseRequest
         $this->getDatabaseID(),
           (int) $result[0],
         [],
-        [],
-        $this->getSnoozeDate(),
+        ['snoozeDate' => $this->getSnoozeDate()],
       );
     }
     if ($result) {
