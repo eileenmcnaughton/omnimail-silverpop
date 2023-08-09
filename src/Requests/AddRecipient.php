@@ -63,11 +63,11 @@ class AddRecipient extends SilverpopBaseRequest
   }
 
   /**
-   * @param string $snoozeTimeStamp
+   * @param string|null $snoozeTimeStamp
    *
    * @return AddRecipient
    */
-  public function setSnoozeTimeStamp(string $snoozeTimeStamp): AddRecipient {
+  public function setSnoozeTimeStamp(?string $snoozeTimeStamp): AddRecipient {
     $this->snoozeTimeStamp = $snoozeTimeStamp;
     return $this;
   }
