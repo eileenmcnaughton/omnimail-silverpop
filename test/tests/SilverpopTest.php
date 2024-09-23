@@ -90,9 +90,20 @@ class SilverpopTest extends BaseTestClass {
      * Test creating a list in acoustic using OmniGroup.create api
      */
     public function testGroupCreate(): void {
+        $requests = [
+            file_get_contents(__DIR__ . '/Responses/AuthenticateResponse.txt'),
+            file_get_contents(__DIR__ . '/Responses/CreateContactListResponse.txt'),
+        ];
         /* @var $request \Omnimail\Silverpop\Requests\CreateContactListRequest */
-        $request = Omnimail::create('Silverpop', ['client' => $this->getMockRequest([], FALSE)])->createGroup();
+        $request = Omnimail::create('Silverpop', [
+            'client' => $this->getMockRequest($requests)
+        ])->createGroup([
+            'name' => 'my-group',
+            'databaseID' => 12345,
+            'visibility' => 1
+        ]);
         $response = $request->getResponse();
+        $this->assertOutgoingRequest('CreateContactListRequest.txt');
     }
 
     /**
