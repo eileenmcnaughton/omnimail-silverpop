@@ -113,8 +113,8 @@ class ImportListRequest extends SilverpopBaseRequest
             $this->getCsvFileName()
         );
         $response = new ImportListResponse();
-        $response->setJobId($result['jobId']);
-        $response->setIsSuccess($result['result'] === 'true');
+        $response->setJobId((int) $result['jobId']);
+        $response->setIsSuccess(((string) $result['result']) === 'TRUE');
         $response->setSilverpop($this->silverPop);
         return $response;
     }
