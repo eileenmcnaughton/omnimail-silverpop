@@ -9,7 +9,7 @@ namespace Omnimail\Silverpop\Responses;
 
 class QueryCriteriaResponse extends BaseResponse
 {
-    private array $data;
+    private \SimpleXMLElement $data;
 
     public function __construct($data)
     {
