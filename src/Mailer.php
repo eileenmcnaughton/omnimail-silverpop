@@ -64,7 +64,7 @@ class Mailer extends AbstractMailer implements MailerInterface
    *
    * @param array $parameters
    *
-   * @return \Omnimail\Silverpop\Requests\SilverpopBaseRequest
+   * @return \Omnimail\Silverpop\Requests\GetSentMailingsForOrgRequest
    */
     public function getMailings($parameters = array()) {
       return $this->createRequest('GetSentMailingsForOrgRequest', array_merge($parameters, array(
