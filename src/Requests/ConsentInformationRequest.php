@@ -55,7 +55,7 @@ class ConsentInformationRequest extends SilverpopBaseRequest
   }
 
   /**
-   * @return array
+   * @return int
    */
   public function getPhone() {
      return $this->phone;
