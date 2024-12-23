@@ -140,10 +140,10 @@ abstract class BaseResponse extends \arrayObject implements ResponseInterface
    *
    * @return array
    */
-  public function getDefaultParameters() {
-    return array(
+  public function getDefaultParameters(): array {
+    return [
       'endpoint' => 'https://api4.silverpop.com',
-    );
+    ];
   }
 
   /**

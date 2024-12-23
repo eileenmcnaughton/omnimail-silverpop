@@ -16,7 +16,7 @@ class RecipientsResponse extends DownloadResponse
 
   /**
    * Map keys to a normalised array, intended to be generic of the provider.
-   *
+   * @todo - this appears to be unaccessed - a good intention. Remove this function.
    * @param array $csvHeaders
    *
    * @return array
