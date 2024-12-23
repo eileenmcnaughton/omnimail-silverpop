@@ -30,14 +30,12 @@ abstract class BaseResponse extends \arrayObject implements ResponseInterface
    */
   protected $endTimeStamp;
 
-
   /**
    * Url to direct requests to.
    *
    * @var string
    */
   protected $endPoint;
-
 
   /**
    * Offset from start of csv file.
