@@ -115,6 +115,14 @@ class WebUser
     /**
      * @return mixed
      */
+    public function getRecipientActionUrlIdentifier()
+    {
+        return $this->data['SITE_ID'];
+    }
+
+    /**
+     * @return mixed
+     */
     public function getMailingName()
     {
         return $this->data['REFERRER_NAME'];
