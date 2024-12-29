@@ -203,7 +203,7 @@ abstract class SilverpopBaseRequest extends BaseRequest {
    *
    * @return array
    */
-  public function getDefaultParameters(): array {
+  public function getDefaultParameters() {
     return [
       'endpoint' => 'https://api4.silverpop.com',
       'sftpEndpoint' => 'transfer.silverpop.com',
