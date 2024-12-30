@@ -105,11 +105,11 @@ class WebUser
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getRecipientActionUrlName()
+    public function getRecipientActionUrlName(): string
     {
-        return $this->data['SITE_NAME'];
+        return (string) $this->data['SITE_NAME'];
     }
 
     /**
