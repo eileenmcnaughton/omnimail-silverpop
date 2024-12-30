@@ -129,11 +129,11 @@ class WebUser
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getRecipientAction()
+    public function getRecipientAction(): string
     {
-        return $this->data['EVENT_TYPE_NAME'];
+        return (string) $this->data['EVENT_TYPE_NAME'];
     }
 
     /**
