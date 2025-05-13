@@ -346,7 +346,7 @@ class Contact {
   }
 
   public function getCustomData($key) {
-    return (string) $this->data[$key];
+    return (string) ($this->data[$key] ?? '');
   }
 
   /**
