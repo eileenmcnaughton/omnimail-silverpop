@@ -39,14 +39,14 @@ use Omnimail\Silverpop\Connector\SilverpopGuzzleXmlConnector;
  * 3) The intent of the Omnimail package is to wrap & standardise the underlying package for upstream use,
  * so there is no pressing need to change the underlying package.
  */
-class SilverpopGuzzleConnector extends SilverpopConnector{
+class SilverpopGuzzleConnector extends SilverpopConnector {
 
     /**
      * Instance of the connector object.
      *
      * @var SilverpopBaseConnector
      */
-    protected static $instance=null;
+    protected static $instance = null;
 
     /**
      * Construct a connector object. If you will be authenticating with only a
@@ -80,7 +80,7 @@ class SilverpopGuzzleConnector extends SilverpopConnector{
      *
      * @return SilverpopConnector
      */
-    public static function getInstance($baseUrl='http://api.pilot.silverpop.com', $dateFormat='MM/dd/yyyy', $timeout=10.0) {
+    public static function getInstance($baseUrl='http://api.pilot.silverpop.com', $dateFormat = 'MM/dd/yyyy', $timeout = 10.0) {
         if (static::$instance == null) {
             static::$instance = new static($baseUrl);
         }
