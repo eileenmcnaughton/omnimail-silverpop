@@ -58,11 +58,8 @@ class SilverpopGuzzleConnector extends SilverpopConnector{
      *
      * @param string $baseUrl The base API URL for all requests.
      */
-    public function __construct($baseUrl='http://api.pilot.silverpop.com', $dateFormat='MM/dd/yyyy') {
-        $this->restConnector = SilverpopRestConnector::getInstance();
-        $this->xmlConnector  = SilverpopGuzzleXmlConnector::getInstance();
-        $this->setBaseUrl($baseUrl);
-        $this->setDateFormat($dateFormat);
+    public function __construct($baseUrl = 'http://api.pilot.silverpop.com', $dateFormat = 'MM/dd/yyyy', $timeout = 30.0) {
+        parent::__construct($baseUrl, $dateFormat, $timeout);
     }
 
     /**
