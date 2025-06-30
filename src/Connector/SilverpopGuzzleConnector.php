@@ -82,7 +82,7 @@ class SilverpopGuzzleConnector extends SilverpopConnector {
      */
     public static function getInstance($baseUrl='http://api.pilot.silverpop.com', $dateFormat = 'MM/dd/yyyy', $timeout = 10.0) {
         if (static::$instance == null) {
-            static::$instance = new static($baseUrl);
+            static::$instance = new static($baseUrl, $dateFormat, $timeout);
         }
         return static::$instance;
     }
