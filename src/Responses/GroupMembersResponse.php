@@ -70,7 +70,10 @@ class GroupMembersResponse extends BaseResponse
    */
   public function getDownloadDirectory() {
     if (!$this->downloadDirectory) {
-      $this->downloadDirectory = sys_get_temp_dir() . '/acoustic/';
+        if (file_exists(sys_get_temp_dir()) && !file_exists(sys_get_temp_dir() . '/acoustic/')) {
+            mkdir(sys_get_temp_dir() . '/acoustic');
+        }
+        $this->downloadDirectory = sys_get_temp_dir() . '/acoustic/';
     }
     return $this->downloadDirectory;
   }
