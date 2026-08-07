@@ -70,7 +70,7 @@ class DownloadResponse extends BaseResponse {
      */
     public function getReader() {
         if (!$this->reader) {
-            $this->reader = Reader::from($this->downloadCsv()); 
+            $this->reader = Reader::from($this->downloadCsv());
             $this->reader->setHeaderOffset(0);
         }
         return $this->reader;
